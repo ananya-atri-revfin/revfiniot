@@ -1,0 +1,7 @@
+<svg className = "menu"
+xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <circle cx="24" cy="24" r="23.5" fill="#FAFAFA" stroke="#D8D8D8"/>
+  <rect x="24" y="18" width="10.2857" height="1.71429" rx="0.857143" fill="#4C4C4C"/>
+  <rect x="12.8569" y="28.2857" width="10.2857" height="1.71429" rx="0.857143" fill="#4C4C4C"/>
+  <rect x="12.8569" y="23.1429" width="21.4286" height="1.71429" rx="0.857143" fill="#4C4C4C"/>
+</svg>
