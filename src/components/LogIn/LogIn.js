@@ -6,7 +6,6 @@ import rightimg from './Assets/rightimg.svg';
 import OTPInput from 'react-otp-input';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import React from 'react';
 
 const LogIn = () => {
@@ -16,26 +15,19 @@ const LogIn = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const sendOTP = async () => {
-        const mail = document.getElementById('email').value;
-        if (mail === null || !mail.includes("@") || mail.includes(" ") || !mail.includes('.')) {
-            alert("Enter a valid email id!");
-        }
-        else {
-            try {
-                const response = await axios.post('http://localhost:3000/auth/send-otp', { email });
-                console.log(response.data.message); // Log success message
-                setError('');
-            } catch (error) {
-                if (error.response && error.response.data && error.response.data.message) {
-                    console.error('Failed to send OTP:', error.response.data.message); // Log error message
-                    setError(error.response.data.message);
-                  } else {
-                    alert('Failed to send OTP:', error); // Log the entire error object
-                    // setError('Failed to send OTP');
-                  }
-            }
-            document.getElementById('text').innerHTML = "OTP Sent!" ;
+    const sendOTP = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:3000/data/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email })
+            });
+            if (!response.ok) { throw new Error(await response.text()); }
+            else {
+                const result = await response.json();
+                localStorage.setItem('token', result.token)
+                document.getElementById('text').innerHTML = "OTP Sent!";
                 const btn1 = document.getElementById('OTPbtn');
                 btn1.style.display = "none";
                 const rect = document.getElementById('ToEnterEmail');
@@ -44,10 +36,25 @@ const LogIn = () => {
                 btn2.style.display = "inline";
                 const otp = document.getElementById('ToEnterOTP');
                 otp.style.display = "inline";
+            }
         }
-        }
+        catch (error) { alert(`Error: ${error.message}`) }
+    }
 
-    function handleSubmit() {navigate('/home');}
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/data/verify-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, otp })
+            });
+            if (!response.ok) { throw new Error(await response.text()); }
+            else {
+                navigate('/home');
+            }
+        }
+        catch (error) { alert(`Error: ${error.message}`) }
+    }
 
     return (
         <loginstyle.LogInPage>
