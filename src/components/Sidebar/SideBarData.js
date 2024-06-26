@@ -3,76 +3,68 @@ import {ReactComponent as dashicon} from './Assets/dashboard.svg'
 export const SideBarData = [
     {
         title: 'Dashboard',
-        path: '/dashboard',
+        path: '/',
         icon: dashicon
     },
     {
         title: 'Vehicle Management',
-        path: '/vehicle',
-        // icon: {vehicle},
-        // toOpen: {linearrow},
+        path: '/',
         submenu: [
             {
                 title: 'VM1',
-                path: '/vm1'
+                path: '/'
             },
             {
                 title: 'VM2',
-                path: '/vm2'
+                path: '/'
             },
             {
                 title: 'VM3',
-                path: '/vm3'
+                path: '/'
             }
         ]
     },
     {
         title: 'Trigger Management',
-        path: '/management',
-        // icon: {management},
-        // toOpen: {linearrow},
+        path: '/',
         submenu: [
             {
                 title: 'TM1',
-                path: '/tm1'
+                path: '/'
             },
             {
                 title: 'TM2',
-                path: '/tm2'
+                path: '/'
             },
             {
                 title: 'TM3',
-                path: '/tm3'
+                path: '/'
             }
         ]
     },
     {
         title: 'Triggers',
-        path: '/triggers'
-        // icon: {triggers}
+        path: '/'
     },
     {
         title: 'Reports',
-        path: '/reports'
-        // icon: {reports}
+        path: '/'
     },
     {
         title: 'Settings',
-        path: '/settings',
-        // icon: {settings},
-        // toOpen: {linearrow},
+        path: '/',
         submenu: [
             {
                 title: 'Option 1',
-                path: '/opt1'
+                path: '/'
             },
             {
                 title: 'Option 2',
-                path: '/opt2'
+                path: '/'
             },
             {
                 title: 'Option 3',
-                path: '/opt3'
+                path: '/'
             }
         ]
     }

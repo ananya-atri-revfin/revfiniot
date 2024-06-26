@@ -4,70 +4,45 @@ import bell from './Assets/bell.svg';
 import person from './Assets/person.svg';
 import search from './Assets/search.svg';
 import arrow from './Assets/arrow.svg';
-// import dark from './Assets/dark.svg';
-// import Sidebar from './Sidebar';
 import * as navstyle from './navbar-style';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { NavBarData } from './NavBarData';
+import { useState, useEffect } from 'react';
+import { ProfileData } from './ProfileData';
+import Sidebar from '../../Sidebar/Sidebar';
 
 const Navbar = () => {
 
-    // const [mode, setMode] = useState({
-    //     color: 'black',
-    //     backgroundColor: 'white'
-    // })
 
-    // const changeMode = () => {
-    //     if(mode.color === 'black'){
-    //         setMode({
-    //             color: 'white',
-    //             backgroundColor: 'black'
-    //         })
-    //     }
-    //     else{
-    //         setMode({
-    //             color: 'black',
-    //             backgroundColor: 'white'
-    //         })
-    //     }
-    // }
 
-    const handleMouseEnter = () => {
-        setDrop(true);
-    }
+    const [data, setData] = useState({})
 
-    const handleMouseLeave = () => {
-        setDrop(false);
-    }
-
-    // const [sidebar, setSidebar] = useState(false);
-
-    // const showSidebar = () => {
-    //     setSidebar(!sidebar);
-    //     if (showSidebar) {
-    //         <Sidebar />
-    //     }
-    // }
+    useEffect(() => {
+        fetch('http://localhost:3000/data/get-user')
+            .then(response => response.json())
+            .then(data => setData(data));
+    }, []);
 
     const [drop, setDrop] = useState(false);
 
+    const [showSidebar, setShowSidebar] = useState(false);
 
+    const handleMenu = () => { setShowSidebar(!showSidebar) }
 
+    const handleMouseEnter = () => { setDrop(true); }
+
+    const handleMouseLeave = () => { setDrop(false); }
 
     return (
 
-        <navstyle.Nav
-        // style = {mode}
-        >
+        <navstyle.Nav>
 
-            <Link to="/home">
+            <Link to="/">
                 <navstyle.Logo src={logo} alt="logo" />
             </Link>
 
-            <navstyle.Icons src={menu} alt="menu"
-            // onClick={showSidebar}
-            />
+            <navstyle.Icons src={menu} alt="menu" onClick={handleMenu} />
+
+            {showSidebar && <Sidebar />}
 
             <navstyle.Rectangle>
                 <img src={search} alt="search" />
@@ -78,35 +53,34 @@ const Navbar = () => {
                 <navstyle.Bell src={bell} alt="bell" />
             </navstyle.MidCircle>
 
-            {/* <navstyle.MidCircle>
-                <navstyle.Bell src={dark} alt="dark" 
-                onClick={changeMode} 
-                />
-            </navstyle.MidCircle> */}
-
-            <navstyle.Profile
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            >
+            <navstyle.Profile onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <div style={{ display: 'flex' }}>
                     <navstyle.DP src={person} alt="person" />
                     <navstyle.SmallCircle />
                 </div>
+
                 <div>
-                    <navstyle.TextName>Rohan Sharma</navstyle.TextName><br />
-                    <navstyle.TextProf>Operations</navstyle.TextProf>
+                    <navstyle.TextName>{data.name}</navstyle.TextName><br />
+                    <navstyle.TextProf>{data.occupation}</navstyle.TextProf>
                 </div>
+
                 <div>
                     <navstyle.RotateImg className="myarrow" src={arrow} alt="arrow" />
-
                 </div>
-                {
-                    drop &&
+                {drop &&
                     <navstyle.Drop>
-                        {NavBarData.map((item, index) => {
+                        {ProfileData.map((item, index) => {
+                            function handleProfile({ onclick }) {
+
+                            }
                             return (
-                                <navstyle.Items item={item} key = {index}>
-                                    <navstyle.Direct to = {item.path}>{item.title}</navstyle.Direct>
+                                <navstyle.Items item={item} key={index}>
+                                    <navstyle.Direct id={item.id}
+                                    // onClick={handleProfile(item.id)}
+                                    onClick={item.onclick}
+                                    >
+                                         {item.title}
+                                    </navstyle.Direct>
                                 </navstyle.Items>
                             );
                         })}
@@ -116,6 +90,7 @@ const Navbar = () => {
             </navstyle.Profile>
 
         </navstyle.Nav>
+
     );
 }
 

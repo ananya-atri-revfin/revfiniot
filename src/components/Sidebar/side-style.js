@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 export const Side = styled.aside
 `margin-top: 1%;
 display: flex;
+position: absolute;
+top: 15%;
+left: 0px;
 width: max-content;
-height: 100%;
 padding: 2% 4%;
 flex-direction: column;
 align-items: flex-start;
@@ -14,17 +16,6 @@ flex-shrink: 0;
 border-right: 1px solid var(--Base-Color-Lines, #D8D8D8);
 background: var(--Base-Color-Row-White, #FFF);
 `
-
-// export const Line = styled.div
-// `width: auto;
-// height: 2px;
-// flex-shrink: 0;
-// border-top: 24px;
-// border-bottom: 24px;
-// align-self: stretch;
-// border-radius: 2px;
-// background: var(--base-color-disable-base, #EEE);
-// `
 
 export const LinkStyled = styled(Link)
 `
@@ -52,25 +43,6 @@ export const Icons = styled.img
     width: 15px;
     height: 15px;
 }`
-
-// export const SideLink = styled(Link)
-// `display: flex;`
-
-// export const SideBarLabel = styled.div
-// `font-size:30px;`
-
-// export const Drop = styled.div
-// `
-// width: 25%;
-// background-color: white;
-// position: absolute;
-// border: 1px solid #D8D8D8;
-// border-radius: 10%;
-// // box-shadow: grey;
-// // padding-top: 100%;
-// top: 30%;
-// `
-
 export const Items = styled.li
 `cursor: pointer;
 font-size: 14px;
@@ -82,10 +54,4 @@ width: 100%;
 }
 &:hover{
     background-color: lightgrey;
-}
-`
-
-// export const RotateImg = styled.img
-// `&:hover{
-// transform: rotate(180deg);
-// }`
+}`

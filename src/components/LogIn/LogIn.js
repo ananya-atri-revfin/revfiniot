@@ -5,18 +5,15 @@ import leftimg from './Assets/leftimg.svg';
 import rightimg from './Assets/rightimg.svg';
 import OTPInput from 'react-otp-input';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import Home from '../Home/Home';
 
 const LogIn = () => {
 
-    const [email, setEmail] = useState('');
     const [otp, setOtp] = useState('');
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
 
-    const sendOTP = async (e) => {
-        e.preventDefault();
+    const [email, setEmail] = useState('');
+
+    const sendOTP = async () => {
         try {
             const response = await fetch('http://localhost:3000/data/send-otp', {
                 method: 'POST',
@@ -25,20 +22,19 @@ const LogIn = () => {
             });
             if (!response.ok) { throw new Error(await response.text()); }
             else {
-                const result = await response.json();
-                localStorage.setItem('token', result.token)
-                document.getElementById('text').innerHTML = "OTP Sent!";
+                document.getElementById('text').innerHTML = ("OTP Sent to " + email);
                 const btn1 = document.getElementById('OTPbtn');
                 btn1.style.display = "none";
                 const rect = document.getElementById('ToEnterEmail');
                 rect.style.display = "none";
                 const btn2 = document.getElementById('loginbtn');
                 btn2.style.display = "inline";
+                const btn3 = document.getElementById('goback');
+                btn3.style.display = "inline";
                 const otp = document.getElementById('ToEnterOTP');
                 otp.style.display = "inline";
             }
-        }
-        catch (error) { alert(`Error: ${error.message}`) }
+        }catch (error) { alert("Invalid Email Id") }
     }
 
     const handleSubmit = async () => {
@@ -50,11 +46,16 @@ const LogIn = () => {
             });
             if (!response.ok) { throw new Error(await response.text()); }
             else {
-                navigate('/home');
+                const result = await response.json();
+                const token = result.token;
+                localStorage.setItem('token', token)
+                {<Home/>}
+                window.location.reload();
             }
-        }
-        catch (error) { alert(`Error: ${error.message}`) }
+        }catch (error) { alert('Incorrect OTP!') }
     }
+
+    const handleBack = async () => { window.location.reload(); }
 
     return (
         <loginstyle.LogInPage>
@@ -68,15 +69,11 @@ const LogIn = () => {
                 <p id="text">Please enter your details to log into the account</p>
 
                 <loginstyle.Rect id="ToEnterEmail">
-                    <loginstyle.Icon src={maillogo} />
+                    <loginstyle.mail src={maillogo} />
                     <loginstyle.Email type="email" placeholder='Enter your email...' id="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} required />
                 </loginstyle.Rect>
 
-                <loginstyle.ButtonOTP
-                    id="OTPbtn"
-                    onClick={sendOTP}
-                >Get OTP</loginstyle.ButtonOTP>
-                {error && <p>{error}</p>}
+                <loginstyle.ButtonOTP id="OTPbtn" onClick={sendOTP}>Get OTP</loginstyle.ButtonOTP>
 
                 <loginstyle.ToEnter id='ToEnterOTP'>
 
@@ -96,17 +93,13 @@ const LogIn = () => {
                             color: "#000",
                             fontWeight: "400"
                         }}
-                        focusStyle={{
-                            border: "1px solid #CFD3DB",
-                            outline: "none"
-                        }}
-                    />
+                        focusStyle={{ border: "1px solid #CFD3DB", outline: "none" }} />
+
                 </loginstyle.ToEnter>
 
-                <loginstyle.ButtonV
-                    id="loginbtn"
-                    onClick={handleSubmit}
-                >Login</loginstyle.ButtonV>
+                <loginstyle.ButtonV id="loginbtn" onClick={handleSubmit}>Login</loginstyle.ButtonV>
+
+                <loginstyle.ButtonV id="goback" onClick={handleBack}>Go Back</loginstyle.ButtonV>
 
             </loginstyle.LogInOrientation>
 

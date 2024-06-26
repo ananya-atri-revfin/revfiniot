@@ -10,9 +10,7 @@ const SubMenu = ({ item }) => {
 	return (
 		<div>
 			<sidestyle.LinkStyled to={item.path}
-				onClick={
-					item.submenu && showSubmenu
-				}>
+				onClick={item.submenu && showSubmenu}>
 					{item.title}
 					{item.submenu && submenu
 						? item.toOpen
