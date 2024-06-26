@@ -8,10 +8,8 @@ import { useState } from 'react';
 import Home from '../Home/Home';
 
 const LogIn = () => {
-
     const [otp, setOtp] = useState('');
     const [email, setEmail] = useState('');
-
     const sendOTP = async () => {
         try {
             const response = await fetch('http://localhost:3000/data/send-otp', {
@@ -33,9 +31,8 @@ const LogIn = () => {
                 const otp = document.getElementById('ToEnterOTP');
                 otp.style.display = "inline";
             }
-        } catch (error) {alert("Incorrect email!")}
+        } catch (error) {alert(JSON.parse(error.message).message)}
     }
-
     const handleSubmit = async () => {
         try {
             const response = await fetch('http://localhost:3000/data/verify-otp', {
@@ -55,11 +52,9 @@ const LogIn = () => {
                 { <Home /> }
                 window.location.reload();
             }
-        } catch (error) { alert('Incorrect OTP!') }
+        } catch (error) { alert(JSON.parse(error.message).message)}
     }
-
     const handleBack = async () => { window.location.reload(); }
-
     return (
         <loginstyle.LogInPage>
             <loginstyle.LogInOrientation>
@@ -98,5 +93,4 @@ const LogIn = () => {
         </loginstyle.LogInPage>
     );
 }
-
 export default LogIn;
