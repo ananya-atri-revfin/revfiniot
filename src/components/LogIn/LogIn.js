@@ -10,7 +10,6 @@ import Home from '../Home/Home';
 const LogIn = () => {
 
     const [otp, setOtp] = useState('');
-
     const [email, setEmail] = useState('');
 
     const sendOTP = async () => {
@@ -20,7 +19,7 @@ const LogIn = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
             });
-            if (!response.ok) { throw new Error(await response.text()); }
+            if (!response.ok) {throw new Error(await response.text());}
             else {
                 document.getElementById('text').innerHTML = ("OTP Sent to " + email);
                 const btn1 = document.getElementById('OTPbtn');
@@ -34,7 +33,7 @@ const LogIn = () => {
                 const otp = document.getElementById('ToEnterOTP');
                 otp.style.display = "inline";
             }
-        }catch (error) { alert("Invalid Email Id") }
+        } catch (error) {alert("Incorrect email!")}
     }
 
     const handleSubmit = async () => {
@@ -48,35 +47,31 @@ const LogIn = () => {
             else {
                 const result = await response.json();
                 const token = result.token;
+                const name = result.name;
+                const occupation = result.occupation;
                 localStorage.setItem('token', token)
-                {<Home/>}
+                localStorage.setItem('name', name)
+                localStorage.setItem('occupation', occupation)
+                { <Home /> }
                 window.location.reload();
             }
-        }catch (error) { alert('Incorrect OTP!') }
+        } catch (error) { alert('Incorrect OTP!') }
     }
 
     const handleBack = async () => { window.location.reload(); }
 
     return (
         <loginstyle.LogInPage>
-
             <loginstyle.LogInOrientation>
-
                 <img src={logo} alt="logo" />
-
                 <h1>Welcome back!</h1>
-
                 <p id="text">Please enter your details to log into the account</p>
-
                 <loginstyle.Rect id="ToEnterEmail">
                     <loginstyle.mail src={maillogo} />
                     <loginstyle.Email type="email" placeholder='Enter your email...' id="email" value={email} name="email" onChange={(e) => setEmail(e.target.value)} required />
                 </loginstyle.Rect>
-
                 <loginstyle.ButtonOTP id="OTPbtn" onClick={sendOTP}>Get OTP</loginstyle.ButtonOTP>
-
                 <loginstyle.ToEnter id='ToEnterOTP'>
-
                     <OTPInput
                         value={otp}
                         onChange={setOtp}
@@ -94,19 +89,12 @@ const LogIn = () => {
                             fontWeight: "400"
                         }}
                         focusStyle={{ border: "1px solid #CFD3DB", outline: "none" }} />
-
                 </loginstyle.ToEnter>
-
                 <loginstyle.ButtonV id="loginbtn" onClick={handleSubmit}>Login</loginstyle.ButtonV>
-
                 <loginstyle.ButtonV id="goback" onClick={handleBack}>Go Back</loginstyle.ButtonV>
-
             </loginstyle.LogInOrientation>
-
             <loginstyle.LeftImage src={leftimg} />
-
             <loginstyle.RightImage src={rightimg} />
-
         </loginstyle.LogInPage>
     );
 }

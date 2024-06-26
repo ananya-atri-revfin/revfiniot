@@ -6,21 +6,11 @@ import search from './Assets/search.svg';
 import arrow from './Assets/arrow.svg';
 import * as navstyle from './navbar-style';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ProfileData } from './ProfileData';
 import Sidebar from '../../Sidebar/Sidebar';
 
 const Navbar = () => {
-
-
-
-    const [data, setData] = useState({})
-
-    useEffect(() => {
-        fetch('http://localhost:3000/data/get-user')
-            .then(response => response.json())
-            .then(data => setData(data));
-    }, []);
 
     const [drop, setDrop] = useState(false);
 
@@ -36,9 +26,7 @@ const Navbar = () => {
 
         <navstyle.Nav>
 
-            <Link to="/">
-                <navstyle.Logo src={logo} alt="logo" />
-            </Link>
+            <Link to="/"><navstyle.Logo src={logo} alt="logo" /></Link>
 
             <navstyle.Icons src={menu} alt="menu" onClick={handleMenu} />
 
@@ -49,9 +37,7 @@ const Navbar = () => {
                 <navstyle.Input type="text" placeholder="Search Here..." />
             </navstyle.Rectangle>
 
-            <navstyle.MidCircle>
-                <navstyle.Bell src={bell} alt="bell" />
-            </navstyle.MidCircle>
+            <navstyle.MidCircle><navstyle.Bell src={bell} alt="bell" /></navstyle.MidCircle>
 
             <navstyle.Profile onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 <div style={{ display: 'flex' }}>
@@ -60,27 +46,18 @@ const Navbar = () => {
                 </div>
 
                 <div>
-                    <navstyle.TextName>{data.name}</navstyle.TextName><br />
-                    <navstyle.TextProf>{data.occupation}</navstyle.TextProf>
+                    <navstyle.TextName>{localStorage.getItem('name')}</navstyle.TextName><br />
+                    <navstyle.TextProf>{localStorage.getItem('occupation')}</navstyle.TextProf>
                 </div>
 
-                <div>
-                    <navstyle.RotateImg className="myarrow" src={arrow} alt="arrow" />
-                </div>
+                <div><navstyle.RotateImg className="myarrow" src={arrow} alt="arrow" /></div>
+
                 {drop &&
                     <navstyle.Drop>
                         {ProfileData.map((item, index) => {
-                            function handleProfile({ onclick }) {
-
-                            }
                             return (
                                 <navstyle.Items item={item} key={index}>
-                                    <navstyle.Direct id={item.id}
-                                    // onClick={handleProfile(item.id)}
-                                    onClick={item.onclick}
-                                    >
-                                         {item.title}
-                                    </navstyle.Direct>
+                                    <navstyle.Direct id={item.id} onClick={item.onclick}>{item.title}</navstyle.Direct>
                                 </navstyle.Items>
                             );
                         })}
@@ -90,7 +67,6 @@ const Navbar = () => {
             </navstyle.Profile>
 
         </navstyle.Nav>
-
     );
 }
 
