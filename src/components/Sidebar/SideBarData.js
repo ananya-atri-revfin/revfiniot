@@ -1,10 +1,12 @@
-import {ReactComponent as dashicon} from './Assets/dashboard.svg'
+import Dashboard from './pages/Dashboard';
 
 export const SideBarData = [
     {
         title: 'Dashboard',
         path: '/',
-        icon: dashicon
+        onclick: function dashboard() {
+            <Dashboard />
+        }
     },
     {
         title: 'Vehicle Management',

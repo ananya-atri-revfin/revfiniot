@@ -1,21 +1,21 @@
 import React from "react";
 import { SideBarData } from "./SideBarData";
 import SubMenu from "./SubMenu";
-import * as sidestyle from './side-style';
+import * as style from './side-style';
 
 const Sidebar = () => {
     
         return (
-            <sidestyle.Side>
+            <style.Sidebar>
                 {SideBarData.map((item, index, icon) => {
                     return (
                     <SubMenu item={item} key={index} icon={icon}>
-                        <sidestyle.Icons>{icon}</sidestyle.Icons>
-                        <sidestyle.Items>{item}</sidestyle.Items>
+                        <style.Icons>{icon}</style.Icons>
+                        <style.SidebarItems>{item}</style.SidebarItems>
                     </SubMenu>
                     ) ;
                 })}
-            </sidestyle.Side>
+            </style.Sidebar>
         );
     
 }

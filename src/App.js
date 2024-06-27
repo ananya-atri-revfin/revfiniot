@@ -1,16 +1,17 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import React from 'react';
-import AuthGuard from './auth.guard';
+import AuthGuard from './AuthenticationMiddleware';
+import Error404 from './components/Error/Error404';
 
 function App() {
   const token = localStorage.getItem('token')
-  console.log(token)
   return (
     <Router>
-       <div className="App dm-sans-fonts">
+      <div>
         <Routes>
-          <Route exact path='*' element={AuthGuard(token) } />
-         </Routes>
+          <Route exact path='/' element={AuthGuard(token)} />
+          <Route path='/*' Component={Error404} />
+        </Routes>
       </div>
     </Router>
   );

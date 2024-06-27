@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 
-export const Side = styled.aside
+export const Sidebar = styled.aside
 `margin-top: 1%;
 display: flex;
 position: absolute;
@@ -43,7 +43,7 @@ export const Icons = styled.img
     width: 15px;
     height: 15px;
 }`
-export const Items = styled.li
+export const SidebarItems = styled.li
 `cursor: pointer;
 font-size: 14px;
 border-radius: 10%;
