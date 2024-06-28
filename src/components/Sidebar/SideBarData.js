@@ -1,12 +1,7 @@
-import Dashboard from './pages/Dashboard';
-
 export const SideBarData = [
     {
         title: 'Dashboard',
         path: '/',
-        onclick: function dashboard() {
-            <Dashboard />
-        }
     },
     {
         title: 'Vehicle Management',

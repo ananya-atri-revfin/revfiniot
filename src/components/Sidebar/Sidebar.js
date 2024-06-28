@@ -4,7 +4,6 @@ import SubMenu from "./SubMenu";
 import * as style from './side-style';
 
 const Sidebar = () => {
-    
         return (
             <style.Sidebar>
                 {SideBarData.map((item, index, icon) => {
@@ -16,8 +15,7 @@ const Sidebar = () => {
                     ) ;
                 })}
             </style.Sidebar>
-        );
-    
+        );   
 }
 
 export default Sidebar;
